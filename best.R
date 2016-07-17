@@ -3,7 +3,7 @@ best <- function(state, outcome) {
         heartAttack <- "heart attack"
         heartFailure <- "heart failure"
         pneumonia <- "pneumonia"
-        states <- NULL
+        hostpitalNames <- NULL
         
         # Check if input is valid.
         if(!(state %in% data$State)) stop("invalid state")
@@ -11,22 +11,24 @@ best <- function(state, outcome) {
              outcome == heartFailure || 
              outcome == pneumonia)) stop("invalid outcome")
         
+        allInState <- data[data$State == state,]
+        
         # Heart Attack
         if(outcome == heartAttack) {
-                states <- data[data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack == 
-                                       min(data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack) & data$State == outcome, ][["Hospital.Name"]] 
+                hostpitalNames <- allInState[(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack ==
+                                                     min(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)),][["Hospital.Name"]]
         }
         
         # Heart Failure
         if(outcome == heartFailure) {
-                states <- data[data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure == 
-                                       min(data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure) & data$State == outcome, ][["Hospital.Name"]] 
+                hostpitalNames <- allInState[(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure ==
+                                                     min(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure)),][["Hospital.Name"]] 
         }
         
         # Pneumonia
         if(outcome == pneumonia) {
-                states <- data[data$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia == 
-                                       min(data$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia) & data$State == outcome, ][["Hospital.Name"]]
+                hostpitalNames <- allInState[(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia ==
+                                                     min(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)),][["Hospital.Name"]]
         }
-        sort(states)[1]
+        sort(hostpitalNames)[1]
 }
