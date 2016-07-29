@@ -13,8 +13,59 @@ rankhospital <- function(state, outcome, num = "best") {
         
         allInState <- data[data$State == state,]
         
-        if(num == "best") {
+        if(outcome == heartAttack) {
+                allInState[, 11] <- as.numeric(allInState[, 11])
+                allInState <- allInState[!is.na(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack),]
                 
+                myOrder <- order(allInState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)
+                
+                if(is.numeric(num)) {
+                        
+                        
+                        
+                        
+                } else if(num == "best") {
+                        
+                } else if(num == "worst") {
+                        
+                }
         }
         
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
